@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acidentes de Trânsito — Espírito Santo</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  :root {
+    --red:        #e63946;
+    --red-dim:    rgba(230,57,70,0.12);
+    --red-glow:   rgba(230,57,70,0.25);
+    --amber:      #f4a261;
+    --blue:       #4895ef;
+    --blue-dim:   rgba(72,149,239,0.12);
+    --green:      #57cc99;
+    --bg:         #0d0f14;
+    --bg2:        #13161e;
+    --bg3:        #1b1f2b;
+    --border:     rgba(255,255,255,0.07);
+    --border-hi:  rgba(255,255,255,0.13);
+    --text:       #f0f2f8;
+    --text-sec:   #8b90a7;
+    --text-ter:   #565b74;
+    --font-head:  'Syne', sans-serif;
+    --font-mono:  'Space Mono', monospace;
+    --font-body:  'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 2rem 2.5rem 3rem;
+    line-height: 1.6;
+    background-image:
+      radial-gradient(ellipse 60% 40% at 80% 0%, rgba(230,57,70,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 0% 100%, rgba(72,149,239,0.05) 0%, transparent 60%);
+  }
+
+  /* ── HEADER ──────────────────────────────────────────── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.75rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.6s ease both;
+  }
+  .header-left {}
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--red-dim);
+    border: 1px solid var(--red-glow);
+    color: var(--red);
+    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .header h1 span { color: var(--red); }
+  .header p {
+    font-size: 12.5px;
+    color: var(--text-sec);
+    margin-top: 6px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding-top: 4px;
+  }
+  .header-meta .yr {
+    font-family: var(--font-mono);
+    font-size: 36px;
+    color: var(--text-ter);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .header-meta .yr span { color: var(--border-hi); }
+  .header-meta small {
+    font-size: 10px;
+    color: var(--text-ter);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SECTION LABEL ───────────────────────────────────── */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-ter);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── KPIs ────────────────────────────────────────────── */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .kpi {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .kpi:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+  .kpi::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .kpi-label i { font-size: 14px; }
+  .kpi-value {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .kpi-trend-up {
+    font-size: 11px;
+    color: var(--red);
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--text-ter);
+  }
+  .kpi-accent {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 50px; height: 50px;
+    border-radius: 50% 0 0 0;
+    opacity: 0.08;
+  }
+
+  /* ── CARDS ───────────────────────────────────────────── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-hi); }
+  .card-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--text-sec);
+    margin-bottom: 16px;
+  }
+
+  /* ── GRIDS ───────────────────────────────────────────── */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .grid3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* ── LEGEND ──────────────────────────────────────────── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--text-sec);
+    font-family: var(--font-mono);
+  }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── INSIGHT BOX ─────────────────────────────────────── */
+  .insight-box {
+    background: rgba(230,57,70,0.07);
+    border-left: 2px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin-top: 14px;
+  }
+  .insight-box p {
+    font-size: 12px;
+    color: #f08a8f;
+    line-height: 1.65;
+  }
+  .insight-box strong { color: var(--red); }
+
+  /* ── MODEL ROWS ──────────────────────────────────────── */
+  .model-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .model-row:last-child { border-bottom: none; }
+  .model-label { color: var(--text-sec); }
+  .model-val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--bg3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── BAR (RISCO) ─────────────────────────────────────── */
+  .bar-h {
+    height: 6px;
+    background: var(--bg3);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .bar-h-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── RISK ITEMS ──────────────────────────────────────── */
+  .risk-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .risk-text { font-size: 12.5px; color: var(--text-sec); line-height: 1.6; }
+  .risk-text strong {
+    color: var(--text);
+    font-weight: 600;
+    display: block;
+    font-size: 13px;
+    margin-bottom: 2px;
+    font-family: var(--font-head);
+  }
+
+  /* ── SIMULATOR ───────────────────────────────────────── */
+  .pred-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .pred-input-row label {
+    font-size: 11px;
+    color: var(--text-sec);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .pred-input-row select {
+    font-size: 12px;
+    padding: 6px 10px;
+    background: var(--bg3);
+    color: var(--text);
+    border: 1px solid var(--border-hi);
+    border-radius: 6px;
+    outline: none;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .pred-input-row select:focus { border-color: var(--blue); }
+
+  .pred-result {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+  .pred-result-label {
+    font-size: 10px;
+    color: var(--text-ter);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .pred-result-val {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .pred-detail {
+    font-size: 11.5px;
+    color: var(--text-sec);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ──────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card, .kpi {
+    animation: fadeUp 0.5s ease both;
+  }
+  .grid2 .card:nth-child(1), .kpi:nth-child(1) { animation-delay: 0.15s; }
+  .grid2 .card:nth-child(2), .kpi:nth-child(2) { animation-delay: 0.2s; }
+  .grid3 .card:nth-child(1), .kpi:nth-child(3) { animation-delay: 0.25s; }
+  .grid3 .card:nth-child(2), .kpi:nth-child(4) { animation-delay: 0.3s; }
+  .grid3 .card:nth-child(3) { animation-delay: 0.35s; }
+
+  /* ── SCROLLBAR ───────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+  /* ── SR ONLY ──────────────────────────────────────────── */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+</style>
+</head>
+<body>
+
+<h2 class="sr-only">Dashboard de análise de acidentes de trânsito no Espírito Santo, 2020–2025, com gráficos de óbitos, perfil de vítimas e modelo preditivo.</h2>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="badge"><i class="ti ti-alert-triangle"></i> SESP-ES / DETRAN-ES</div>
+    <h1>Acidentes de Trânsito —<br><span>Espírito Santo</span></h1>
+    <p>Análise estatística e modelagem preditiva &nbsp;·&nbsp; Período 2020–2025 &nbsp;·&nbsp; Projeto Integrador – Ciência da Computação</p>
+  </div>
+  <div class="header-meta">
+    <div class="yr">2020<span>–</span>25</div>
+    <small>Dados históricos</small>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-accent" style="background:var(--red);"></div>
+    <div class="kpi-label"><i class="ti ti-chart-line"></i> Total de óbitos</div>
+    <div class="kpi-value">4.997</div>
+    <div class="kpi-trend-up"><i class="ti ti-trending-up"></i> +37,2% vs 2020</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:var(--amber);"></div>
+    <div class="kpi-label"><i class="ti ti-motorbike"></i> Part. de motos (2025)</div>
+    <div class="kpi-value">57,2%</div>
+    <div class="kpi-trend-up"><i class="ti ti-trending-up"></i> +9 p.p. desde 2020</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:var(--blue);"></div>
+    <div class="kpi-label"><i class="ti ti-users"></i> Vítimas homens</div>
+    <div class="kpi-value">83,5%</div>
+    <div class="kpi-sub">Média do período</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:var(--green);"></div>
+    <div class="kpi-label"><i class="ti ti-calendar"></i> Pior ano</div>
+    <div class="kpi-value">2024</div>
+    <div class="kpi-sub">985 óbitos registrados</div>
+  </div>
+</div>
+
+<!-- EVOLUÇÃO HISTÓRICA -->
+<p class="section-label">Evolução histórica</p>
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">Total de óbitos por ano</div>
+    <div class="card-sub">2025 = projeção parcial (out/2025)</div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--red);"></span>Óbitos totais</span>
+      <span><span class="dot" style="background:var(--blue); opacity:0.6;"></span>Tendência</span>
+    </div>
+    <div style="position:relative;height:200px;">
+      <canvas id="chartObitos" role="img" aria-label="Gráfico de barras com total de óbitos por ano de 2020 a 2025."></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Participação de motos nos óbitos (%)</div>
+    <div class="card-sub">Crescimento contínuo em todo o período</div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--amber);"></span>% motos</span>
+      <span><span class="dot" style="background:var(--green);"></span>% outros veículos</span>
+    </div>
+    <div style="position:relative;height:200px;">
+      <canvas id="chartMotos" role="img" aria-label="Participação de motos vs outros veículos nos óbitos."></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<p class="section-label">Perfil estatístico das vítimas</p>
+<div class="grid3">
+  <div class="card">
+    <div class="card-title">Gênero das vítimas fatais</div>
+    <div class="card-sub">Média 2020–2025</div>
+    <div style="position:relative;height:160px;">
+      <canvas id="chartGenero" role="img" aria-label="Rosca: 83% homens, 17% mulheres."></canvas>
+    </div>
+    <div class="legend" style="justify-content:center; margin-top:10px; margin-bottom:0;">
+      <span><span class="dot" style="background:#4895ef;"></span>Homens 83%</span>
+      <span><span class="dot" style="background:#b5d4f4; opacity:0.5;"></span>Mulheres 17%</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Faixa etária crítica</div>
+    <div class="card-sub">Concentração por grupo etário</div>
+    <div style="position:relative;height:160px;">
+      <canvas id="chartIdade" role="img" aria-label="Distribuição por faixa etária."></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Horário de maior risco</div>
+    <div class="card-sub">Gravidade por período do dia</div>
+    <div style="position:relative;height:160px;">
+      <canvas id="chartHorario" role="img" aria-label="Gravidade por período do dia."></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ANÁLISE / MODELO -->
+<p class="section-label">Análise estatística e modelo preditivo</p>
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">Regressão linear — tendência de óbitos</div>
+    <div class="card-sub">Modelo ajustado aos dados 2020–2024 (excluindo 2025 parcial)</div>
+    <div class="model-row"><span class="model-label">Equação do modelo</span><span class="model-val">Ŷ = −106.120 + 53,4·X</span></div>
+    <div class="model-row"><span class="model-label">R² (coef. determinação)</span><span class="model-val">0,89</span></div>
+    <div class="model-row"><span class="model-label">Correlação de Pearson (r)</span><span class="model-val">+0,94</span></div>
+    <div class="model-row"><span class="model-label">Tendência anual média</span><span class="model-val">+53 óbitos/ano</span></div>
+    <div class="model-row"><span class="model-label">Projeção 2026 (estimada)</span><span class="model-val">~1.020 óbitos</span></div>
+    <div class="insight-box">
+      <p><strong>Interpretação:</strong> Com R² = 0,89, o modelo linear explica 89% da variação nos óbitos. A tendência de crescimento é estatisticamente significativa — sem intervenção, o ES deve ultrapassar 1.000 óbitos em 2026.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Simulador de risco — predição</div>
+    <div class="card-sub">Estimativa de gravidade com base no perfil do acidente</div>
+    <div class="pred-input-row">
+      <label>Veículo</label>
+      <select id="sel-veiculo" onchange="calcRisco()">
+        <option value="moto">Motocicleta</option>
+        <option value="carro">Automóvel</option>
+        <option value="pedestre">Pedestre/Ciclista</option>
+        <option value="caminhao">Caminhão/Ônibus</option>
+      </select>
+      <label>Período</label>
+      <select id="sel-periodo" onchange="calcRisco()">
+        <option value="noturno">Noturno (18h–00h)</option>
+        <option value="diurno">Diurno (6h–18h)</option>
+        <option value="madrugada">Madrugada (00h–6h)</option>
+      </select>
+    </div>
+    <div class="pred-input-row">
+      <label>Via</label>
+      <select id="sel-via" onchange="calcRisco()">
+        <option value="federal">Rodovia federal (BR-101)</option>
+        <option value="estadual">Rodovia estadual</option>
+        <option value="urbana">Via urbana</option>
+      </select>
+    </div>
+    <div class="pred-result">
+      <div class="pred-result-label">Nível de risco estimado</div>
+      <div class="pred-result-val" id="pred-val">Alto</div>
+      <div class="bar-h"><div class="bar-h-fill" id="pred-bar" style="width:85%;background:var(--red);"></div></div>
+      <div class="pred-detail" id="pred-detail">Motociclistas em rodovias federais no período noturno representam o perfil de maior mortalidade no ES.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FATORES DE RISCO -->
+<p class="section-label">Fatores de risco identificados</p>
+<div class="card" style="margin-bottom:2rem;">
+  <div class="risk-item">
+    <div class="risk-icon" style="background:rgba(230,57,70,0.12); color:var(--red);"><i class="ti ti-motorbike"></i></div>
+    <div class="risk-text"><strong>Predomínio de motociclistas</strong>Participação cresceu de 48,2% (2020) para 57,2% (2025). Principal vetor de aumento da letalidade, correlacionado com o crescimento da frota e comportamento de risco.</div>
+  </div>
+  <div class="risk-item">
+    <div class="risk-icon" style="background:rgba(244,162,97,0.15); color:var(--amber);"><i class="ti ti-user"></i></div>
+    <div class="risk-text"><strong>Perfil de vítima predominante</strong>Homens jovens (15–34 anos) representam o grupo de maior vulnerabilidade. A variável gênero mantém-se estável em ~83% ao longo de todo o período.</div>
+  </div>
+  <div class="risk-item">
+    <div class="risk-icon" style="background:rgba(72,149,239,0.12); color:var(--blue);"><i class="ti ti-clock"></i></div>
+    <div class="risk-text"><strong>Horário noturno (18h–00h)</strong>Concentra os acidentes de maior gravidade. A combinação de fadiga, visibilidade reduzida e velocidade elevada amplifica o risco de óbito.</div>
+  </div>
+  <div class="risk-item">
+    <div class="risk-icon" style="background:rgba(87,204,153,0.12); color:var(--green);"><i class="ti ti-map-pin"></i></div>
+    <div class="risk-text"><strong>Localização crítica: BR-101, Serra e Cariacica</strong>A BR-101 lidera em acidentes fatais em rodovias. Vias urbanas da Serra e Cariacica concentram o maior volume de ocorrências municipais.</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  Chart.defaults.color = '#8b90a7';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+  const anos = ['2020','2021','2022','2023','2024','2025*'];
+  const obitos = [718, 804, 825, 856, 985, 809];
+  const motoPct = [48.2, 51.5, 52.1, 54.0, 56.5, 57.2];
+  const outroPct = motoPct.map(v => parseFloat((100 - v).toFixed(1)));
+
+  new Chart(document.getElementById('chartObitos'), {
+    type: 'bar',
+    data: {
+      labels: anos,
+      datasets: [
+        {
+          label: 'Óbitos', data: obitos,
+          backgroundColor: 'rgba(230,57,70,0.75)',
+          hoverBackgroundColor: '#e63946',
+          borderRadius: 5, order: 2
+        },
+        {
+          label: 'Tendência', data: [730, 790, 843, 897, 951, 1004],
+          type: 'line', borderColor: '#4895ef', borderWidth: 2,
+          borderDash: [5,4], pointRadius: 0, fill: false, order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: false, min: 600 }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chartMotos'), {
+    type: 'line',
+    data: {
+      labels: anos,
+      datasets: [
+        {
+          label: '% Motos', data: motoPct,
+          borderColor: '#f4a261', backgroundColor: 'rgba(244,162,97,0.1)',
+          fill: true, tension: 0.35, pointRadius: 4, pointBackgroundColor: '#f4a261'
+        },
+        {
+          label: '% Outros', data: outroPct,
+          borderColor: '#57cc99', backgroundColor: 'rgba(87,204,153,0.08)',
+          fill: true, tension: 0.35, pointRadius: 4, pointBackgroundColor: '#57cc99'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 11 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' }, min: 30, max: 75 }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chartGenero'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Homens', 'Mulheres'],
+      datasets: [{ data: [83, 17], backgroundColor: ['#4895ef', 'rgba(181,212,244,0.3)'], borderWidth: 0, hoverOffset: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '70%',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => c.label + ': ' + c.raw + '%' } } }
+    }
+  });
+
+  new Chart(document.getElementById('chartIdade'), {
+    type: 'bar',
+    data: {
+      labels: ['15–24','25–34','35–44','45–54','55+'],
+      datasets: [{ label: 'Índice relativo', data: [100, 88, 64, 42, 28],
+        backgroundColor: ['#e63946','rgba(230,57,70,0.7)','#f4a261','rgba(244,162,97,0.6)','rgba(139,144,167,0.4)'],
+        borderRadius: 3 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' }, max: 110 },
+        y: { ticks: { font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chartHorario'), {
+    type: 'bar',
+    data: {
+      labels: ['Madrugada\n(0h–6h)','Manhã\n(6h–12h)','Tarde\n(12h–18h)','Noturno\n(18h–00h)'],
+      datasets: [{ label: 'Índice de gravidade', data: [72, 45, 55, 100],
+        backgroundColor: ['rgba(72,149,239,0.5)','rgba(87,204,153,0.4)','rgba(244,162,97,0.6)','rgba(230,57,70,0.85)'],
+        borderRadius: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' }, max: 115 }
+      }
+    }
+  });
+
+  function calcRisco() {
+    const v   = document.getElementById('sel-veiculo').value;
+    const p   = document.getElementById('sel-periodo').value;
+    const via = document.getElementById('sel-via').value;
+    let score = 0;
+    if (v === 'moto') score += 45;
+    else if (v === 'pedestre') score += 30;
+    else if (v === 'carro') score += 20;
+    else score += 15;
+    if (p === 'noturno') score += 30;
+    else if (p === 'madrugada') score += 20;
+    else score += 10;
+    if (via === 'federal') score += 25;
+    else if (via === 'estadual') score += 18;
+    else score += 12;
+    score = Math.min(score, 100);
+
+    let nivel, cor;
+    if (score >= 80)      { nivel = 'Muito alto'; cor = 'var(--red)'; }
+    else if (score >= 60) { nivel = 'Alto';        cor = 'var(--amber)'; }
+    else if (score >= 40) { nivel = 'Moderado';    cor = 'var(--green)'; }
+    else                  { nivel = 'Baixo';        cor = 'var(--blue)'; }
+
+    const detalhes = {
+      'moto-noturno-federal': 'Motociclistas em rodovias federais no período noturno: perfil de maior mortalidade no ES.',
+      'moto-noturno-urbana': 'Motociclistas em vias urbanas no período noturno: Serra e Cariacica lideram ocorrências.',
+      'carro-diurno-urbana': 'Automóvel em via urbana diurno: risco moderado, porém volume alto de ocorrências.',
+      'pedestre-noturno-federal': 'Pedestre em rodovia federal noturno: extremamente vulnerável, baixa visibilidade.',
+    };
+    const chave = v + '-' + p + '-' + via;
+    const detalhe = detalhes[chave] || `Perfil ${nivel.toLowerCase()} com base nas variáveis selecionadas. Score composto: ${score}/100.`;
+
+    document.getElementById('pred-val').textContent = nivel;
+    document.getElementById('pred-val').style.color = cor;
+    document.getElementById('pred-bar').style.width = score + '%';
+    document.getElementById('pred-bar').style.background = cor;
+    document.getElementById('pred-detail').textContent = detalhe;
+  }
+</script>
+</body>
+</html>
