@@ -2,7 +2,7 @@ Projeto Integrador III - Aplicações de Ciência de Dados
 
 Curso: Ciência da Computação  
 
-Aluno: [Vittor Mariano Loyola] 
+Aluno: [Vittor Mariano Loyola e Rafael Pim Santos] 
 
 Professor: Howard Cruz  
 
