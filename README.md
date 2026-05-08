@@ -43,6 +43,7 @@ Tecnologias: Python para processamento, SQL para manipulação de grandes volume
 Entrega 1 (23/03 a 27/03): Definição de escopo, justificativa e metodologia (Atual). 
 
 Entrega 2 (04/05 a 08/05): Apresentação de protótipo funcional com análise estatística preliminar e modelos aplicados. 
+Entrega da apresentação do vídeo do trabalho: https://drive.google.com/file/d/1uuMJYlyr4Rhhm5xGc2tFcTmvlmFPmVhV/view?usp=drive_link
 
 Entrega 3 (08/06 a 12/06): Apresentação do Produto Final (MVP) com demonstração da solução completa e documentação técnica 
 
